@@ -1,0 +1,11 @@
+--- configure.orig	2025-05-02 13:04:29.000000000 -0700
++++ configure	2025-05-10 20:34:03.765713000 -0700
+@@ -7732,7 +7732,7 @@
+     then
+         llvm_target="$mingw_cpu-windows"
+         llvm_extra_cflags="-target $llvm_target -fuse-ld=lld"
+-        llvm_cflags="-Wl,-subsystem:console -Wl,-WX"
++        llvm_cflags="-Wl,-subsystem:console"
+     else
+         llvm_target=$target
+         llvm_extra_cflags="-fuse-ld=lld"
