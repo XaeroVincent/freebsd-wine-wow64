@@ -3763,6 +3763,7 @@ lib/wine/i386-windows/wineps.drv
 lib/wine/i386-windows/wineps16.drv16
 lib/wine/i386-windows/winevdm.exe
 lib/wine/i386-windows/winevulkan.dll
+lib/wine/i386-windows/winewayland.drv
 lib/wine/i386-windows/winex11.drv
 lib/wine/i386-windows/winexinput.sys
 lib/wine/i386-windows/wing.dll16
