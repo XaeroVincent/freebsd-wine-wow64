@@ -1,5 +1,7 @@
 A port of Wine's new experimental WOW64 mode, without 32-bit Wine libraries or binaries to FreeBSD.
 
+**AI Disclosure:** _AI agents were used to assist with development._
+
 Based on the code by: Alex (shkhln)
 
 https://github.com/shkhln/freebsd-wine
