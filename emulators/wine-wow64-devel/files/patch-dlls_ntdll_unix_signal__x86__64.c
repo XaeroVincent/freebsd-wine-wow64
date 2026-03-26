@@ -1,5 +1,5 @@
 --- dlls/ntdll/unix/signal_x86_64.c.orig	2026-03-20 13:33:36.000000000 -0700
-+++ dlls/ntdll/unix/signal_x86_64.c	2026-03-25 22:30:16.613555000 -0700
++++ dlls/ntdll/unix/signal_x86_64.c	2026-03-26 05:17:32.763065000 -0700
 @@ -201,6 +201,9 @@ __ASM_GLOBAL_FUNC( modify_ldt,
  
  #elif defined(__FreeBSD__) || defined (__FreeBSD_kernel__)
@@ -19,289 +19,6 @@
  static inline TEB *get_current_teb(void)
  {
      unsigned long rsp;
-@@ -602,7 +605,7 @@ static inline void context_init_xstate( CONTEXT *conte
- 
- 
- /***********************************************************************
-- *           dwarf_virtual_unwind
-+ * dwarf_virtual_unwind
-  *
-  * Equivalent of RtlVirtualUnwind for builtin modules.
-  */
-@@ -718,7 +721,7 @@ static NTSTATUS dwarf_virtual_unwind( ULONG64 ip, ULON
- 
- #ifdef HAVE_LIBUNWIND
- /***********************************************************************
-- *           libunwind_virtual_unwind
-+ * libunwind_virtual_unwind
-  *
-  * Equivalent of RtlVirtualUnwind for builtin modules.
-  */
-@@ -848,7 +851,7 @@ static NTSTATUS libunwind_virtual_unwind( ULONG64 ip, 
- 
- 
- /***********************************************************************
-- *           unwind_builtin_dll
-+ * unwind_builtin_dll
-  */
- NTSTATUS unwind_builtin_dll( void *args )
- {
-@@ -911,7 +914,7 @@ __ASM_GLOBAL_FUNC( clear_alignment_flag,
- 
- 
- /***********************************************************************
-- *           init_handler
-+ * init_handler
-  */
- static inline ucontext_t *init_handler( void *sigcontext )
- {
-@@ -942,7 +945,7 @@ static inline ucontext_t *init_handler( void *sigconte
- 
- 
- /***********************************************************************
-- *           leave_handler
-+ * leave_handler
-  */
- static inline void leave_handler( ucontext_t *sigcontext )
- {
-@@ -974,7 +977,7 @@ static inline void leave_handler( ucontext_t *sigconte
- 
- 
- /***********************************************************************
-- *           save_context
-+ * save_context
-  *
-  * Set the register values from a sigcontext.
-  */
-@@ -1046,7 +1049,7 @@ static void save_context( struct xcontext *xcontext, c
- 
- 
- /***********************************************************************
-- *           fixup_frame_fpu_state
-+ * fixup_frame_fpu_state
-  *
-  * Set FP frame state not saved in __wine_unix_call_dispatcher from sigcontext.
-  */
-@@ -1068,7 +1071,7 @@ static void fixup_frame_fpu_state( struct syscall_fram
- 
- 
- /***********************************************************************
-- *           restore_context
-+ * restore_context
-  *
-  * Build a sigcontext from the register values.
-  */
-@@ -1089,7 +1092,7 @@ static void restore_context( const struct xcontext *xc
- 
- 
- /***********************************************************************
-- *           signal_set_full_context
-+ * signal_set_full_context
-  */
- NTSTATUS signal_set_full_context( CONTEXT *context )
- {
-@@ -1102,7 +1105,7 @@ NTSTATUS signal_set_full_context( CONTEXT *context )
- 
- 
- /***********************************************************************
-- *              get_native_context
-+ * get_native_context
-  */
- void *get_native_context( CONTEXT *context )
- {
-@@ -1111,7 +1114,7 @@ void *get_native_context( CONTEXT *context )
- 
- 
- /***********************************************************************
-- *              get_wow_context
-+ * get_wow_context
-  */
- void *get_wow_context( CONTEXT *context )
- {
-@@ -1121,8 +1124,8 @@ void *get_wow_context( CONTEXT *context )
- 
- 
- /***********************************************************************
-- *              NtSetContextThread  (NTDLL.@)
-- *              ZwSetContextThread  (NTDLL.@)
-+ * NtSetContextThread  (NTDLL.@)
-+ * ZwSetContextThread  (NTDLL.@)
-  */
- NTSTATUS WINAPI NtSetContextThread( HANDLE handle, const CONTEXT *context )
- {
-@@ -1221,8 +1224,8 @@ NTSTATUS WINAPI NtSetContextThread( HANDLE handle, con
- 
- 
- /***********************************************************************
-- *              NtGetContextThread  (NTDLL.@)
-- *              ZwGetContextThread  (NTDLL.@)
-+ * NtGetContextThread  (NTDLL.@)
-+ * ZwGetContextThread  (NTDLL.@)
-  */
- NTSTATUS WINAPI NtGetContextThread( HANDLE handle, CONTEXT *context )
- {
-@@ -1359,7 +1362,7 @@ NTSTATUS WINAPI NtGetContextThread( HANDLE handle, CON
- 
- 
- /***********************************************************************
-- *              set_thread_wow64_context
-+ * set_thread_wow64_context
-  */
- NTSTATUS set_thread_wow64_context( HANDLE handle, const void *ctx, ULONG size )
- {
-@@ -1462,7 +1465,7 @@ NTSTATUS set_thread_wow64_context( HANDLE handle, cons
- 
- 
- /***********************************************************************
-- *              get_thread_wow64_context
-+ * get_thread_wow64_context
-  */
- NTSTATUS get_thread_wow64_context( HANDLE handle, void *ctx, ULONG size )
- {
-@@ -1574,7 +1577,7 @@ NTSTATUS get_thread_wow64_context( HANDLE handle, void
- 
- 
- /***********************************************************************
-- *           setup_raise_exception
-+ * setup_raise_exception
-  */
- static void setup_raise_exception( ucontext_t *sigcontext, EXCEPTION_RECORD *rec, struct xcontext *xcontext )
- {
-@@ -1651,7 +1654,7 @@ static void setup_raise_exception( ucontext_t *sigcont
- 
- 
- /***********************************************************************
-- *           setup_exception
-+ * setup_exception
-  *
-  * Setup a proper stack frame for the raise function, and modify the
-  * sigcontext so that the return from the signal handler will call
-@@ -1668,7 +1671,7 @@ static void setup_exception( ucontext_t *sigcontext, E
- 
- 
- /***********************************************************************
-- *           call_user_apc_dispatcher
-+ * call_user_apc_dispatcher
-  */
- NTSTATUS call_user_apc_dispatcher( CONTEXT *context, unsigned int flags, ULONG_PTR arg1, ULONG_PTR arg2, ULONG_PTR arg3,
-                                    PNTAPCFUNC func, NTSTATUS status )
-@@ -1718,7 +1721,7 @@ NTSTATUS call_user_apc_dispatcher( CONTEXT *context, u
- 
- 
- /***********************************************************************
-- *           call_raise_user_exception_dispatcher
-+ * call_raise_user_exception_dispatcher
-  */
- void call_raise_user_exception_dispatcher(void)
- {
-@@ -1727,7 +1730,7 @@ void call_raise_user_exception_dispatcher(void)
- 
- 
- /***********************************************************************
-- *           call_user_exception_dispatcher
-+ * call_user_exception_dispatcher
-  */
- NTSTATUS call_user_exception_dispatcher( EXCEPTION_RECORD *rec, CONTEXT *context )
- {
-@@ -1762,7 +1765,7 @@ NTSTATUS call_user_exception_dispatcher( EXCEPTION_REC
- 
- 
- /***********************************************************************
-- *           call_user_mode_callback
-+ * call_user_mode_callback
-  */
- extern NTSTATUS call_user_mode_callback( ULONG64 user_rsp, void **ret_ptr, ULONG *ret_len, void *func, TEB *teb );
- __ASM_GLOBAL_FUNC( call_user_mode_callback,
-@@ -1843,7 +1846,7 @@ __ASM_GLOBAL_FUNC( call_user_mode_callback,
- 
- 
- /***********************************************************************
-- *           user_mode_callback_return
-+ * user_mode_callback_return
-  */
- extern void DECLSPEC_NORETURN user_mode_callback_return( void *ret_ptr, ULONG ret_len,
-                                                          NTSTATUS status, TEB *teb );
-@@ -1893,7 +1896,7 @@ __ASM_GLOBAL_FUNC( user_mode_callback_return,
- 
- 
- /***********************************************************************
-- *           user_mode_abort_thread
-+ * user_mode_abort_thread
-  */
- extern void DECLSPEC_NORETURN user_mode_abort_thread( NTSTATUS status, struct syscall_frame *frame );
- __ASM_GLOBAL_FUNC( user_mode_abort_thread,
-@@ -1913,7 +1916,7 @@ __ASM_GLOBAL_FUNC( user_mode_abort_thread,
- 
- 
- /***********************************************************************
-- *           KeUserModeCallback
-+ * KeUserModeCallback
-  */
- NTSTATUS KeUserModeCallback( ULONG id, const void *args, ULONG len, void **ret_ptr, ULONG *ret_len )
- {
-@@ -1935,7 +1938,7 @@ NTSTATUS KeUserModeCallback( ULONG id, const void *arg
- 
- 
- /***********************************************************************
-- *           NtCallbackReturn  (NTDLL.@)
-+ * NtCallbackReturn  (NTDLL.@)
-  */
- NTSTATUS WINAPI NtCallbackReturn( void *ret_ptr, ULONG ret_len, NTSTATUS status )
- {
-@@ -1945,7 +1948,7 @@ NTSTATUS WINAPI NtCallbackReturn( void *ret_ptr, ULONG
- 
- 
- /***********************************************************************
-- *           is_privileged_instr
-+ * is_privileged_instr
-  *
-  * Check if the fault location is a privileged instruction.
-  */
-@@ -2027,7 +2030,7 @@ static inline DWORD is_privileged_instr( CONTEXT *cont
- 
- 
- /***********************************************************************
-- *           handle_interrupt
-+ * handle_interrupt
-  *
-  * Handle an interrupt.
-  */
-@@ -2211,7 +2214,7 @@ static BOOL check_atl_thunk( ucontext_t *sigcontext, E
- 
- 
- /***********************************************************************
-- *           handle_syscall_fault
-+ * handle_syscall_fault
-  *
-  * Handle a page fault happening during a system call.
-  */
-@@ -2257,7 +2260,7 @@ static BOOL handle_syscall_fault( ucontext_t *sigconte
- 
- 
- /***********************************************************************
-- *           handle_syscall_trap
-+ * handle_syscall_trap
-  *
-  * Handle a trap exception during a system call.
-  */
-@@ -2305,7 +2308,7 @@ static BOOL handle_syscall_trap( ucontext_t *sigcontex
- 
- 
- /***********************************************************************
-- *           check_invalid_gsbase
-+ * check_invalid_gsbase
-  *
-  * Check for fault caused by invalid %gs value (some copy protection schemes mess with it).
-  */
-@@ -2737,7 +2740,7 @@ static void sigsys_handler( int signal, siginfo_t *sig
- 
- 
- /***********************************************************************
-- *           ldt_set_entry
-+ * ldt_set_entry
-  */
- void ldt_set_entry( WORD sel, LDT_ENTRY entry )
- {
 @@ -2756,6 +2759,16 @@ void ldt_set_entry( WORD sel, LDT_ENTRY entry )
      if ((ret = modify_ldt( &ldt_info ))) ERR( "modify_ldt failed %d\n", ret );
  #elif defined(__APPLE__)
@@ -319,24 +36,6 @@
  #else
      fprintf( stderr, "No LDT support on this platform\n" );
      exit(1);
-@@ -2764,7 +2777,7 @@ void ldt_set_entry( WORD sel, LDT_ENTRY entry )
- 
- 
- /**********************************************************************
-- *           get_thread_ldt_entry
-+ * get_thread_ldt_entry
-  */
- NTSTATUS get_thread_ldt_entry( HANDLE handle, THREAD_DESCRIPTOR_INFORMATION *info, ULONG len )
- {
-@@ -2788,7 +2801,7 @@ NTSTATUS get_thread_ldt_entry( HANDLE handle, THREAD_D
- 
- 
- /**********************************************************************
-- *             signal_init_threading
-+ * signal_init_threading
-  */
- void signal_init_threading(void)
- {
 @@ -2877,6 +2890,72 @@ static int libc_addr_cb( struct dl_phdr_info *info, si
          libc_size = max( libc_size, info->dlpi_phdr[i].p_vaddr + info->dlpi_phdr[i].p_memsz );
  
@@ -397,7 +96,7 @@
 +    for (sig = 1; sig <= _SIG_MAXSIG; sig++)
 +    {
 +        if (__sys_sigaction(sig, NULL, &act) == -1) return -1;
-+	if (act.sa_handler != SIG_DFL && act.sa_handler != SIG_IGN)
++        if (act.sa_handler != SIG_DFL && act.sa_handler != SIG_IGN)
 +        {
 +            libthr_signal_handlers[sig - 1] = act.sa_sigaction;
 +            act.sa_sigaction = libthr_sighandler_wrapper;
@@ -422,25 +121,16 @@
  #endif
      }
  
-@@ -2945,6 +3029,9 @@ void signal_init_process(void)
+@@ -2944,6 +3028,9 @@ void signal_init_process(void)
+ #if defined(__APPLE__) || defined(PR_SET_SYSCALL_USER_DISPATCH)
      sig_act.sa_sigaction = sigsys_handler;
      if (sigaction( SIGSYS, &sig_act, NULL ) == -1) goto error;
- #endif
++#endif
 +#ifdef __FreeBSD__
 +    if (wrap_libthr_signal_handlers() == -1) goto error;
-+#endif
+ #endif
      return;
  
-  error:
-@@ -2954,7 +3041,7 @@ void signal_init_process(void)
- 
- 
- /***********************************************************************
-- *           init_syscall_frame
-+ * init_syscall_frame
-  */
- void init_syscall_frame( LPTHREAD_START_ROUTINE entry, void *arg, BOOL suspend, TEB *teb )
- {
 @@ -2981,6 +3068,7 @@ void init_syscall_frame( LPTHREAD_START_ROUTINE entry,
  #endif
  #elif defined (__FreeBSD__) || defined (__FreeBSD_kernel__)
@@ -449,28 +139,12 @@
  #elif defined(__NetBSD__)
      sysarch( X86_64_SET_GSBASE, &teb );
  #elif defined (__APPLE__)
-@@ -3048,7 +3136,7 @@ void init_syscall_frame( LPTHREAD_START_ROUTINE entry,
- 
- 
- /***********************************************************************
-- *           signal_start_thread
-+ * signal_start_thread
-  */
- __ASM_GLOBAL_FUNC( signal_start_thread,
-                    "subq $0x38,%rsp\n\t"
-@@ -3089,7 +3177,7 @@ __ASM_GLOBAL_FUNC( signal_start_thread,
- 
- 
- /***********************************************************************
-- *           __wine_syscall_dispatcher
-+ * __wine_syscall_dispatcher
-  */
- __ASM_GLOBAL_FUNC( __wine_syscall_dispatcher,
-                    __ASM_LOCAL_LABEL("__wine_syscall_dispatcher_gs_load") ":\n\t"
-@@ -3201,6 +3289,23 @@ __ASM_GLOBAL_FUNC( __wine_syscall_dispatcher,
+@@ -3199,8 +3287,25 @@ __ASM_GLOBAL_FUNC( __wine_syscall_dispatcher,
+                    "movq 0x320(%r13),%rdi\n\t"     /* amd64_thread_data()->pthread_teb */
+                    "xorl %esi,%esi\n\t"
                     "movl $0x3000003,%eax\n\t"      /* _thread_set_tsd_base */
-                    "syscall\n\t"
-                    "leaq -0x98(%rbp),%rcx\n"
++                   "syscall\n\t"
++                   "leaq -0x98(%rbp),%rcx\n"
 +#elif defined(__FreeBSD__)
 +                   /* Restore pthread fsbase and WOW32 %%fs selector on syscall entry. */
 +                   "movw 0x338(%r13),%ax\n\t"      /* amd64_thread_data()->fs */
@@ -485,8 +159,8 @@
 +                   "leaq 0x320(%r13),%rsi\n\t"     /* sysarch requires a pointer to the value */
 +                   "movq $0xa5,%rax\n\t"           /* sysarch */
 +                   "movq $0x81,%rdi\n\t"           /* AMD64_SET_FSBASE */
-+                   "syscall\n\t"
-+                   "leaq -0x98(%rbp),%rcx\n"
+                    "syscall\n\t"
+                    "leaq -0x98(%rbp),%rcx\n"
 +                   "2:\n\t"
  #endif
                     "ldmxcsr 0x33c(%r13)\n\t"       /* amd64_thread_data()->mxcsr */
@@ -511,16 +185,7 @@
  #endif
                     "movl 0xb4(%rcx),%edx\n\t"      /* frame->restore_flags */
                     "testl $0x48,%edx\n\t"          /* CONTEXT_FLOATING_POINT | CONTEXT_XSTATE */
-@@ -3417,7 +3535,7 @@ __ASM_GLOBAL_FUNC( __wine_syscall_dispatcher_instrumen
- 
- 
- /***********************************************************************
-- *           __wine_unix_call_dispatcher
-+ * __wine_unix_call_dispatcher
-  */
- __ASM_GLOBAL_FUNC( __wine_unix_call_dispatcher,
-                    "movq %rcx,%r10\n\t"
-@@ -3489,7 +3607,25 @@ __ASM_GLOBAL_FUNC( __wine_unix_call_dispatcher,
+@@ -3489,7 +3607,23 @@ __ASM_GLOBAL_FUNC( __wine_unix_call_dispatcher,
                     "movq 0x320(%r13),%rdi\n\t"     /* amd64_thread_data()->pthread_teb */
                     "xorl %esi,%esi\n\t"
                     "movl $0x3000003,%eax\n\t"      /* _thread_set_tsd_base */
@@ -537,16 +202,14 @@
 +                   "jmp 2f\n"
 +                   "1:\n\t"
 +                   "leaq 0x320(%r13),%rsi\n\t"     /* sysarch requires a pointer to the value */
-+                   "movq %rdx,%r9\n\t"             /* FreeBSD sysarch clobbers %rdx, backup to %r9 */
 +                   "movq $0xa5,%rax\n\t"           /* sysarch */
 +                   "movq $0x81,%rdi\n\t"           /* AMD64_SET_FSBASE */
                     "syscall\n\t"
-+                   "movq %r9,%rdx\n\t"             /* Restore unix function index */
 +                   "2:\n\t"
  #endif
                     "ldmxcsr 0x33c(%r13)\n\t"       /* amd64_thread_data()->mxcsr */
                     "movq %r8,%rdi\n\t"             /* args */
-@@ -3528,6 +3664,18 @@ __ASM_GLOBAL_FUNC( __wine_unix_call_dispatcher,
+@@ -3528,6 +3662,18 @@ __ASM_GLOBAL_FUNC( __wine_unix_call_dispatcher,
                     "movq %r14,%rcx\n\t"
                     "movq %rdx,%rax\n\t"
                     "movq 0x60(%rcx),%r14\n\t"
